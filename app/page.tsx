@@ -85,6 +85,35 @@ export default function Home() {
         </p>
       </div>
 
+      {/* Navigation to 3D Visualizer */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem', marginTop: '-1rem' }}>
+        <a
+          href="/ncf-visualization"
+          style={{
+            display: 'inline-block',
+            padding: '0.75rem 1.5rem',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: '#fff',
+            textDecoration: 'none',
+            borderRadius: '8px',
+            fontWeight: 'bold',
+            fontSize: '1rem',
+            transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+            boxShadow: '0 4px 12px rgba(102, 126, 234, 0.4)',
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.6)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.4)';
+          }}
+        >
+          🌌 View 3D Visualization
+        </a>
+      </div>
+
       <div className="card">
         <h2>Configuration</h2>
         <div className="input-group">

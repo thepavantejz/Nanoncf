@@ -83,6 +83,31 @@ const NCFVisualization: React.FC = () => {
 
     return (
         <div className={styles.container}>
+            <a
+                href="/"
+                style={{
+                    display: 'inline-block',
+                    marginBottom: '1rem',
+                    padding: '0.5rem 1rem',
+                    background: 'rgba(255,255,255,0.1)',
+                    color: '#61dafb',
+                    textDecoration: 'none',
+                    borderRadius: '6px',
+                    fontSize: '0.9rem',
+                    transition: 'all 0.2s ease',
+                    border: '1px solid rgba(97, 218, 251, 0.3)',
+                }}
+                onMouseOver={(e) => {
+                    e.currentTarget.style.background = 'rgba(97, 218, 251, 0.2)';
+                    e.currentTarget.style.borderColor = 'rgba(97, 218, 251, 0.6)';
+                }}
+                onMouseOut={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                    e.currentTarget.style.borderColor = 'rgba(97, 218, 251, 0.3)';
+                }}
+            >
+                ← Back to Home
+            </a>
             <h1 className={styles.title}>Neural Collaborative Filtering – 3D View</h1>
             <div className={styles.inputBox}>
                 <input
