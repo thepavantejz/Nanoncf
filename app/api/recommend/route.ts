@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { spawn } from 'child_process'
+import { spawnSync } from 'child_process'
 import path from 'path'
 import fs from 'fs'
 
 // This is a workaround for Next.js API routes
-// In production, you'd want a proper Python API server
-// For Vercel, consider using serverless functions or a separate API
+// In production, use a real API server for Python!
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,52 +28,41 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // For now, we'll use a Python script to handle inference
-    // In a real deployment, you'd want a proper API server
+    // Use sync spawn for TypeScript/Next.js API compliance
     const pythonScript = path.join(process.cwd(), 'scripts', 'inference.py')
-    
-    return new Promise((resolve) => {
-      const python = spawn('python', [
-        pythonScript,
-        '--data-type', dataType,
-        '--user-id', userId.toString(),
-        '--top-k', topK.toString()
-      ])
+    const result = spawnSync('python', [
+      pythonScript,
+      '--data-type', dataType,
+      '--user-id', userId.toString(),
+      '--top-k', topK.toString()
+    ], { encoding: 'utf-8' })
 
-      let output = ''
-      let errorOutput = ''
+    if (result.error) {
+      return NextResponse.json(
+        { error: result.error.message },
+        { status: 500 }
+      )
+    }
 
-      python.stdout.on('data', (data) => {
-        output += data.toString()
+    if (result.status !== 0) {
+      return NextResponse.json(
+        { error: result.stderr },
+        { status: 500 }
+      )
+    }
+
+    try {
+      const json = JSON.parse(result.stdout)
+      return NextResponse.json({
+        recommendations: json.recommendations,
+        userId: json.userId,
       })
-
-      python.stderr.on('data', (data) => {
-        errorOutput += data.toString()
-      })
-
-      python.on('close', (code) => {
-        if (code !== 0) {
-          resolve(NextResponse.json(
-            { error: `Python script failed: ${errorOutput}` },
-            { status: 500 }
-          ))
-          return
-        }
-
-        try {
-          const result = JSON.parse(output)
-          resolve(NextResponse.json({
-            recommendations: result.recommendations,
-            userId: result.userId
-          }))
-        } catch (err) {
-          resolve(NextResponse.json(
-            { error: 'Failed to parse recommendations' },
-            { status: 500 }
-          ))
-        }
-      })
-    })
+    } catch (err) {
+      return NextResponse.json(
+        { error: 'Failed to parse recommendations' },
+        { status: 500 }
+      )
+    }
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message || 'Internal server error' },
