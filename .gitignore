@@ -92,3 +92,15 @@ secrets/
 
 # Deployment config (not needed for local dev)
 vercel.json
+
+# Documentation (keep local only)
+*.md
+!README.md
+
+# Config files (keep local only)
+next.config.js
+next-env.d.ts
+tsconfig.json
+package.json
+package-lock.json
+.eslintrc.json
