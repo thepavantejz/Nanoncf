@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { rateLimit, getClientIdentifier } from '@/lib/rate-limiter'
+
+const limiter = rateLimit({ windowMs: 60 * 1000, maxRequests: 20 }); // 20 requests per minute
 
 /**
  * Simplified recommendation API that uses pre-computed recommendations
@@ -12,6 +15,22 @@ import path from 'path'
  */
 
 export async function POST(request: NextRequest) {
+  // Rate limiting
+  const identifier = getClientIdentifier(request);
+  const rateLimitResult = limiter(identifier);
+
+  if (!rateLimitResult.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      {
+        status: 429,
+        headers: {
+          'Retry-After': rateLimitResult.retryAfter?.toString() || '60'
+        }
+      }
+    );
+  }
+
   try {
     const body = await request.json()
     const { dataType, userId, topK = 10 } = body

@@ -1,0 +1,101 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #fff;
+}
+
+.title {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #e0e0e0;
+}
+
+.inputBox {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.textInput {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.showButton {
+    padding: 0.5rem 1.2rem;
+    background: #ff6b6b;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.showButton:hover {
+    background: #ff8787;
+}
+
+.canvasWrapper {
+    width: 700px;
+    height: 700px;
+    max-width: 100%;
+    /* fixed comfortable square size */
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.2);
+    margin: 1rem auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .canvas {
+        height: 400px;
+    }
+}
+
+.itemList {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 1rem;
+}
+
+.subTitle {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: #e0e0e0;
+}
+
+.itemList ul {
+    list-style: none;
+    padding: 0;
+}
+
+.itemList li {
+    background: rgba(255, 255, 255, 0.08);
+    margin: 0.3rem 0;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.explanation {
+    max-width: 800px;
+    margin-top: 1.5rem;
+    line-height: 1.6;
+}
+
+.error {
+    color: #ff6b6b;
+    margin-top: 0.5rem;
+}

@@ -22,12 +22,18 @@ checkpoints/
 data/
 *.csv
 *.json
+!public/recommendations/*.json
 !package.json
+!package-lock.json
+!tsconfig.json
 
 # Next.js
 .next/
 out/
+build/
+dist/
 .vercel
+*.tsbuildinfo
 
 # IDE
 .vscode/
@@ -45,9 +51,38 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
 
 # Environment
 .env
 .env.local
 .env*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
+# Testing
+coverage/
+.nyc_output/
+*.test.js.snap
+
+# Misc
+.cache/
+temp/
+tmp/
+
+# Git internal (should not be pushed)
+.git/
+.github/workflows/*.yml
+!.github/workflows/deploy.yml
+
+# Sensitive files
+*.key
+*.pem
+*.cert
+secrets/
+
+# Build artifacts
+*.tar.gz
+*.zip
